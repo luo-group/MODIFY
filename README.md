@@ -1,18 +1,24 @@
 # MODIFY
 ML-optimized library design with improved fitness and diversity for protein engineering
 
-MODIFY (ML-optimized library design with improved fitness and diversity) is a machine learning algorithm for cold-start library design in protein engineering. Given a set of specified residues in a parent protein, MODIFY designs a high-fitness, high-diversity starting library of combinatorial variants.
-
-The repository of MODIFY contained the implementation of the 3 components of MODIFY: ***1. zero-shot protein fitness prediction***, ***2. pareto optimization of fitness and diversity for library design***, and ***3. structure-based filtering***. For a high-level and holistic understanding our project, please refer to section [***2. pareto optimization of fitness and diversity for library design***](#2-pareto-optimization-of-fitness-and-diversity-for-library-design) first and check out the jupyter notebook (`notebooks/demo_GB1.ipynb`)
-
 ## Table of contents
 - [MODIFY](#modify)
   - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
   - [Install dependencies](#install-dependencies)
   - [1. Zero-shot protein fitness prediction](#1-zero-shot-protein-fitness-prediction)
   - [2. Pareto optimization of fitness and diversity for library design](#2-pareto-optimization-of-fitness-and-diversity-for-library-design)
   - [3. Structure-based filtering](#3-structure-based-filtering)
+  - [Citation](#citation)
   - [Contact](#contact)
+
+## Overview
+
+MODIFY (ML-optimized library design with improved fitness and diversity) is a machine learning algorithm for cold-start library design in protein engineering. Given a set of specified residues in a parent protein, MODIFY designs a high-fitness, high-diversity starting library of combinatorial variants. Please see our [paper](https://www.nature.com/articles/s41467-024-50698-y) in Nature Communications for details.
+
+![MODIFY](doc/overview.png)
+
+The repository of MODIFY contained the implementation of the 3 components of MODIFY: ***1. zero-shot protein fitness prediction***, ***2. pareto optimization of fitness and diversity for library design***, and ***3. structure-based filtering***. For a high-level and holistic understanding our project, please refer to section [***2. pareto optimization of fitness and diversity for library design***](#2-pareto-optimization-of-fitness-and-diversity-for-library-design) first and check out the jupyter notebook (`notebooks/demo_GB1.ipynb`)
 
 
 ## Install dependencies
@@ -176,6 +182,21 @@ def cal_plddt(struct):
 
 struct = bsio.load_structure(f'results/VDGV.pdb', extra_fields=["b_factor"])
 plddt = cal_plddt(struct)
+```
+
+## Citation
+>Ding, K., Chin, M., Zhao, Y. et al. Machine learning-guided co-optimization of fitness and diversity facilitates combinatorial library design in enzyme engineering. Nat Commun 15, 6392 (2024). https://doi.org/10.1038/s41467-024-50698-y
+```
+@article{ding2024machine,
+  title={Machine learning-guided co-optimization of fitness and diversity facilitates combinatorial library design in enzyme engineering},
+  author={Ding, Kerr and Chin, Michael and Zhao, Yunlong and Huang, Wei and Mai, Binh Khanh and Wang, Huanan and Liu, Peng and Yang, Yang and Luo, Yunan},
+  journal={Nature Communications},
+  volume={15},
+  number={1},
+  pages={6392},
+  year={2024},
+  publisher={Nature Publishing Group UK London}
+}
 ```
 
 ## Contact
