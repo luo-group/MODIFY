@@ -1,27 +1,32 @@
-# MODIFY
-ML-optimized library design with improved fitness and diversity for protein engineering
+<h1 align="center">MODIFY</h1>
+<p align="center"><b>ML-optimized library design with improved fitness and diversity for protein engineering</b></p>
 
-## Table of contents
-- [MODIFY](#modify)
-  - [Table of contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Install dependencies](#install-dependencies)
-  - [1. Zero-shot protein fitness prediction](#1-zero-shot-protein-fitness-prediction)
-  - [2. Pareto optimization of fitness and diversity for library design](#2-pareto-optimization-of-fitness-and-diversity-for-library-design)
-  - [3. Structure-based filtering](#3-structure-based-filtering)
-  - [Citation](#citation)
-  - [Contact](#contact)
+<div align="center">
+  <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
+  <a href="https://www.nature.com/articles/s41467-024-50698-y"><img alt="Paper" src="https://img.shields.io/badge/Nat. Commun-Paper-blue"></a>
+</div>
 
-## Overview
+## 📜 Table of contents
+- [📜 Table of contents](#-table-of-contents)
+- [🔎 Overview](#-overview)
+- [💼 Install dependencies](#-install-dependencies)
+- [🧬 1. Zero-shot protein fitness prediction](#-1-zero-shot-protein-fitness-prediction)
+- [📡 2. Pareto optimization of fitness and diversity for library design](#-2-pareto-optimization-of-fitness-and-diversity-for-library-design)
+- [🔬 3. Structure-based filtering](#-3-structure-based-filtering)
+- [🖊️ Citation](#️-citation)
+- [📰 News](#-news)
+- [📪 Contact](#-contact)
 
-MODIFY (ML-optimized library design with improved fitness and diversity) is a machine learning algorithm for cold-start library design in protein engineering. Given a set of specified residues in a parent protein, MODIFY designs a high-fitness, high-diversity starting library of combinatorial variants. Please see our [paper](https://www.nature.com/articles/s41467-024-50698-y) in Nature Communications for details.
+## 🔎 Overview
+
+MODIFY (<u>M</u>L-<u>o</u>ptimized library <u>d</u>esign with <u>i</u>mproved <u>f</u>itness and diversit<u>y</u>) is a machine learning algorithm for cold-start starting library design in protein engineering. Given a set of specified residues in a parent protein, MODIFY designs a high-fitness, high-diversity starting library of combinatorial variants. Please see our [paper](https://www.nature.com/articles/s41467-024-50698-y) in Nature Communications for details.
 
 ![MODIFY](doc/overview.png)
 
 The repository of MODIFY contained the implementation of the 3 components of MODIFY: ***1. zero-shot protein fitness prediction***, ***2. pareto optimization of fitness and diversity for library design***, and ***3. structure-based filtering***. For a high-level and holistic understanding our project, please refer to section [***2. pareto optimization of fitness and diversity for library design***](#2-pareto-optimization-of-fitness-and-diversity-for-library-design) first and check out the jupyter notebook (`notebooks/demo_GB1.ipynb`)
 
 
-## Install dependencies
+## 💼 Install dependencies
 First, clone the repo from github and  `data.zip`.
 ```bash
 # Clone the github repo
@@ -88,20 +93,20 @@ pip install biotite
 ```
 
 
-## 1. Zero-shot protein fitness prediction
+## 🧬 1. Zero-shot protein fitness prediction
 
 MODIFY integrates four pre-trained unsupervised ML models (ESM, EVmutation, EVE, and MSA Transformer) for zero-shot protein fitness prediction. As the computation for calculating the predictions for each method is time-consuming and resource-intensive, we provided our scripts for computing and also provide pre-calculated predictions. You can skip this section and directly jump to the next section [2. Pareto optimization of fitness and diversity for library design](#2-pareto-optimization-of-fitness-and-diversity-for-library-design).
 
 For ESM-1v and ESM-2, we downloaded the scripts from the public repo of ESM (https://github.com/facebookresearch/esm#esmfold) and modified the scripts to adapt to multiprocessing. Please use `torch.hub.set_dir('')` to set a directory for ESM pre-trained models downloading, as this would usually take up a large amount of space. For detailed zero-shot fitness prediction implementation, please refer to `notebooks/zero.ipynb`.
 
-For EVmutation, we generated the MSA from the server of EVcouplings (https://v2.evcouplings.org/) and downloaded the EVmutation model from the results page. For zero-shot fitness prediction implementation, please refer to `notebooks/zero.ipynb`.
+For EVmutation, we generated the MSA from the server of EVcouplings (https://v2.evcouplings.org/) and downloaded the EVmutation model from the results page. For zero-shot fitness prediction implementation, please refer to `notebooks/zero.ipynb`. If the downloaed EVmutation model skipped columns with low coverage, please refer to `notebooks/run_evcouplings` for instructions to train EVmutation model locally.
 
 For EVE, we used the same MSA as EVmutation, and used the code from the public repo (https://github.com/OATML-Markslab/EVE). We modified the scripts to enable multiprocessing inference. For zero-shot fitness prediction implementation, please refer to `notebooks/zero.ipynb`.
 
-For MSA Transformer, we downloaded the scripts from the public repo of ESM (https://github.com/facebookresearch/esm#esmfold) and modified the scripts to adapt to multiprocessing. We used hhfilter to subsample the MSA. Please use `torch.hub.set_dir('')` to set a directory for ESM pre-trained models downloading, as this would usually take up a large amount of space. For detailed zero-shot fitness prediction implementation, please refer to `notebooks/zero.ipynb`
+For MSA Transformer, we downloaded the scripts from the public repo of ESM (https://github.com/facebookresearch/esm#esmfold) and modified the scripts to adapt to multiprocessing. We used hhfilter to subsample the MSA and then further sub-sample the MSA using the sequence weight calculated in EVE. Please use `torch.hub.set_dir('')` to set a directory for ESM pre-trained models downloading, as this would usually take up a large amount of space. For detailed zero-shot fitness prediction implementation, please refer to `notebooks/zero.ipynb`
 
 
-## 2. Pareto optimization of fitness and diversity for library design
+## 📡 2. Pareto optimization of fitness and diversity for library design
 
 Here in our repository, we used the pre-calculated zero-shot protein fitness predictions of GB1 variants `data/GB1/GB1_zero.csv` as the demo and showed how to perform the pareto optimization.  
 
@@ -148,7 +153,7 @@ python scripts/run_modify.py \
 
 We summarized and visualized the results in the jupyter notebook `notebooks/demo_GB1.ipynb`. For an intuitive example illustrating the informed setting of MODIFY (the unique strength of our work), please also refer to this jupyter notebook.
 
-## 3. Structure-based filtering
+## 🔬 3. Structure-based filtering
 
 In MODIFY, we performed a quality check step during the library construction to ensure that the designed variants have good synthesizability. We used ESMFold pLDDT and FoldX $\Delta\Delta G$ as the metrics. For a detailed explanation, please refer to the jupyter notebook `notebooks/structure.ipynb` for our structure-based filtering. Specifically, we sampled from the designed library distribution and performed the filtering for library construction.
 
@@ -184,7 +189,7 @@ struct = bsio.load_structure(f'results/VDGV.pdb', extra_fields=["b_factor"])
 plddt = cal_plddt(struct)
 ```
 
-## Citation
+## 🖊️ Citation
 >Ding, K., Chin, M., Zhao, Y. et al. Machine learning-guided co-optimization of fitness and diversity facilitates combinatorial library design in enzyme engineering. Nat Commun 15, 6392 (2024). https://doi.org/10.1038/s41467-024-50698-y
 ```
 @article{ding2024machine,
@@ -199,6 +204,11 @@ plddt = cal_plddt(struct)
 }
 ```
 
-## Contact
+## 📰 News
+We recently participated in the [Adaptyv Bio Protein Design Competition](https://foundry.adaptyvbio.com/competition) to design binders against EGFR using our MODIFY framework. Among 5 MODIFY designs chosen to be tested in the wet lab, 2 designs ([Seq 5](https://foundry.adaptyvbio.com/competition?design=89667c70-d640-4739-b7bc-1220869b6933) and [Seq 6](https://foundry.adaptyvbio.com/competition?design=4e93f542-8a99-4ca6-9e81-770054410caa)) demonstrated measurable binding affinity to EGFR, while the competition's overall success rate is 13.25%.
+
+
+
+## 📪 Contact
 
 Please submit GitHub issues or contact Kerr Ding (kerrding[at]gatech[dot]edu) and Yunan Luo (yunan[at]gatech[dot]edu) for any questions related to the source code.
