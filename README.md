@@ -23,7 +23,7 @@ MODIFY (<u>M</u>L-<u>o</u>ptimized library <u>d</u>esign with <u>i</u>mproved <u
 
 ![MODIFY](doc/overview.png)
 
-The repository of MODIFY contained the implementation of the 3 components of MODIFY: ***1. zero-shot protein fitness prediction***, ***2. pareto optimization of fitness and diversity for library design***, and ***3. structure-based filtering***. For a high-level and holistic understanding our project, please refer to section [***2. pareto optimization of fitness and diversity for library design***](#2-pareto-optimization-of-fitness-and-diversity-for-library-design) first and check out the jupyter notebook (`notebooks/demo_GB1.ipynb`)
+The repository of MODIFY contained the implementation of the 3 components of MODIFY: ***1. zero-shot protein fitness prediction***, ***2. pareto optimization of fitness and diversity for library design***, and ***3. structure-based filtering***. For a high-level and holistic understanding our project, please refer to section ***2. pareto optimization of fitness and diversity for library design*** first and check out the jupyter notebook (`notebooks/demo_GB1.ipynb`)
 
 
 ## 💼 Install dependencies
